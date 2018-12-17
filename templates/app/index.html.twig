@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon finder{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Pokemon finder</h1>
+        <h6 class="text-muted">El que quiere pokemons, que los busque.</h6>
+
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="row">
+            <div class="col-md-10">
+                {{ form_errors(form.name) }}
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                {{ form_help(form.name) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary'}}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+        <div style="margin-top: 30px;">
+            {% if result is not empty %}
+                <h3>Resultados de la búsqueda</h3>
+            {% endif %}
+            {% for pokemon in result %}
+                <div class="row">
+                    <div class="col-md-2"><img src={{ pokemon.image }}></div>
+                    <div class="col-md-2 vertical-align">{{ pokemon.name }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr>
+        <small>Hecho por Ezequiel Esnaola <a target="_blank" href="https://github.com/eesnaola/pokemon-finder">link</a>.</small>
+    </div>
+{% endblock %}
